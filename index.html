@@ -27,7 +27,7 @@
     <li>Murs : 200 cm d'écart</li>
     <li>Bandes carrelées de 10 cm (droite, devant, derrière), à fleur du bord</li>
     <li>Caisson : 20 cm d'épaisseur × 90 cm de large × 15–20 cm au-dessus du bord (ici 17,5 cm, soit un dessus à 85 cm du sol)</li>
-    <li>Mitigeur mural apparent, centré sur la face du caisson, sans flexible ni douchette</li>
+    <li>Mitigeur mural apparent, centré sur la face du caisson : 2 commandes + bec court, avec flexible, douchette et son support</li>
     <li>Trappe pleine hauteur sur la face côté pièce : plaque ≈ 16 × 80 cm</li>
     <li>Caisson creux (vide ≈ 12 cm) : arrivées d'eau, robinets d'arrêt, siphon</li>
     <li>Baignoire : 40 cm de haut ; bord à 67,5 cm du sol (65–70 cm)</li>
@@ -177,6 +177,22 @@
   cyl(1.5,3.5,'y',4,4.8,0,M.chrome,mx);       // inverseur
   cyl(1.4,12,'x',9,-3.6,0,M.chrome,mx);       // bec
   cyl(1.4,3,'y',14.6,-5,0,M.chrome,mx);       // bec vers le bas
+  /* Support de douchette, douchette et flexible (plan : 2 commandes + bec court, support à côté) */
+  var shp=new THREE.Group(); shp.position.set(0,0.5,25); mx.add(shp);
+  cyl(1.2,7,'x',3.5,0,0,M.chrome,shp);        // support de douchette
+  cyl(2.4,3.5,'y',7,1.5,0,M.chrome,shp);      // fourche du support
+  cyl(1.3,16,'y',7,4,0,M.chrome,shp);         // manche de la douchette
+  var head=cyl(4.2,1.6,'x',8.2,13,0,M.chrome,shp); // tête de la douchette, tournée vers la baignoire
+  cyl(3.6,0.3,'x',9.1,13,0,M.dark,shp);       // grille de la tête
+  var hose=new THREE.CatmullRomCurve3([
+    new THREE.Vector3(3,-3.2,2),
+    new THREE.Vector3(5,-14,6),
+    new THREE.Vector3(7,-19,14),
+    new THREE.Vector3(7.5,-16,22),
+    new THREE.Vector3(7,-4.5,25)
+  ]);
+  var hm=new THREE.Mesh(new THREE.TubeGeometry(hose,48,0.7,10,false),M.chrome);
+  hm.castShadow=true; mx.add(hm);             // flexible
 
   /* Caméra orbitale maison */
   var cur={th:0.62,ph:1.12,r:390,ty:30,tx:100,tz:45};
